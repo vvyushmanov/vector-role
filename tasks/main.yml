@@ -1,2 +1,80 @@
 ---
-# tasks file for vector-role
+- name: Add the user 'vector'
+  become: true
+  ansible.builtin.user:
+    name: vector
+    uid: 900
+- name: Create vector directory
+  become: true
+  become_user: vector
+  ansible.builtin.file:
+    path: "{{ home }}"
+    state: directory
+    mode: '0755'
+- name: Get vector archive
+  become: true
+  become_user: vector
+  ansible.builtin.get_url:
+    url: "https://packages.timber.io/vector/0.27.0/vector-0.27.0-x86_64-unknown-linux-musl.tar.gz"
+    dest: "{{ home }}/vector.tar.gz"
+    owner: vector
+    group: vector
+    mode: '0644'
+- name: Unarchive vector
+  become: true
+  become_user: vector
+  ansible.builtin.unarchive:
+    extra_opts: ['--strip-components=2']
+    src: "{{ home }}/vector.tar.gz"
+    dest: "{{ home }}"
+    remote_src: true
+- name: Install Vector
+  block:
+    - name: Create symlink for bin
+      become: true
+      ansible.builtin.file:
+        src: "{{ home }}/bin/vector"
+        dest: /usr/bin/vector
+        owner: vector
+        group: vector
+        state: link
+    - name: Create data directory
+      become: true
+      ansible.builtin.file:
+        path: "/var/lib/vector"
+        state: directory
+        mode: '0755'
+        owner: vector
+        group: vector
+    - name: Create directory in etc
+      become: true
+      ansible.builtin.file:
+        path: "/etc/vector"
+        state: directory
+        mode: '0755'
+    - name: Implement config
+      become: true
+      ansible.builtin.template:
+        src: templates/vector.toml.j2
+        dest: "{{ home }}/config/vector.toml"
+        owner: vector
+        group: vector
+        mode: '0644'
+    - name: Create symlink for config
+      become: true
+      ansible.builtin.file:
+        src: "{{ home }}/config/vector.toml"
+        dest: /etc/vector/vector.toml
+        owner: vector
+        group: vector
+        state: link
+    - name: Add systemD service
+      become: true
+      ansible.builtin.copy:
+        src: "{{ home }}/etc/systemd/vector.service"
+        dest: /etc/systemd/system
+        remote_src: true
+        owner: root
+        group: root
+        mode: '0644'
+      notify: Start vector service
