@@ -15,11 +15,6 @@
 # Change this to use a non-default directory for Vector data storage:
 # data_dir = "/var/lib/vector"
 
-[sources.dmesg]
-type = "file"
-include = [ "/var/log/dmesg" ]
-read_from = "end"
-
 # Random Syslog-formatted logs
 [sources.dummy_logs]
 type = "demo_logs"
@@ -41,13 +36,17 @@ type = "console"
 inputs = ["parse_logs"]
 encoding.codec = "json"
 
-# [sinks.clickhouse]
-# type = "clickhouse"
-# inputs = [ "dmesg" ]
-# endpoint = "clickhouse-01:8123"
-# database = "logs"
-# table = "logs"
-# skip_unknown_fields = true
+[sinks.clickhouse]
+type = "clickhouse"
+inputs = [ "dummy_logs" ]
+endpoint = "clickhouse-01:8123"
+database = "logs"
+table = "logs"
+skip_unknown_fields = true
+auth.user = "netology"
+auth.strategy = "basic"
+auth.password = ""
+
 
 # Vector's GraphQL API (disabled by default)
 # Uncomment to try it out with the `vector top` command or

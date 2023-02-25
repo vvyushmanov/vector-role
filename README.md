@@ -5,7 +5,7 @@ A role to install Vector.
 
 - Gets the archive, 
 - Provides the necessary symlinks, 
-- Generates a config based on a template (the config sends dmesg logs to the clickhouse-01 node)
+- Generates a config based on a template (the config sends dummy logs to the clickhouse-01 node)
 - Enables and starts the service
 
 Requirements
