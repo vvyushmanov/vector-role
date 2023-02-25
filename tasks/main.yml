@@ -56,18 +56,11 @@
       become: true
       ansible.builtin.template:
         src: templates/vector.toml.j2
-        dest: "{{ home }}/config/vector.toml"
+        dest: "/etc/vector/vector.toml"
         owner: vector
         group: vector
         mode: '0644'
-    - name: Create symlink for config
-      become: true
-      ansible.builtin.file:
-        src: "{{ home }}/config/vector.toml"
-        dest: /etc/vector/vector.toml
-        owner: vector
-        group: vector
-        state: link
+      notify: Start vector service
     - name: Add systemD service
       become: true
       ansible.builtin.copy:
