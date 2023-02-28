@@ -1,0 +1,20 @@
+---
+# This is an example playbook to execute Ansible tests.
+
+- name: Verify
+  hosts: all
+  gather_facts: false
+  tasks:
+  - name: Getting process ID of the process
+    community.general.pids:
+      name: vector
+    register: vector_pid
+  - name: Check PID exists
+    ansible.builtin.assert:
+      that: vector_pid.pids[0] is defined
+  - name: Config validity
+    ansible.builtin.command:
+      vector validate /etc/vector/vector.toml
+    register: validate
+    failed_when: validate.rc != 0
+    changed_when: false

@@ -36,16 +36,16 @@ type = "console"
 inputs = ["parse_logs"]
 encoding.codec = "json"
 
-[sinks.clickhouse]
-type = "clickhouse"
-inputs = [ "dummy_logs" ]
-endpoint = "clickhouse-01:8123"
-database = "logs"
-table = "logs"
-skip_unknown_fields = true
-auth.user = "netology"
-auth.strategy = "basic"
-auth.password = ""
+# [sinks.clickhouse]
+# type = "clickhouse"
+# inputs = [ "dummy_logs" ]
+# endpoint = "clickhouse-01:8123"
+# database = "logs"
+# table = "logs"
+# skip_unknown_fields = true
+# auth.user = "netology"
+# auth.strategy = "basic"
+# auth.password = ""
 
 
 # Vector's GraphQL API (disabled by default)

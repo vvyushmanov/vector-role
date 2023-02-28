@@ -1,4 +1,7 @@
+---
 galaxy_info:
+  role_name: vector_role
+  namespace: netology
   author: Vadim Iushmanov
   description: Installation of Vector
   company: Netology
@@ -6,6 +9,8 @@ galaxy_info:
   min_ansible_version: '2.14'
 
   platforms:
-    - name: Centos
+    - name: EL
       versions:
       - '7'
+      - '8'
+    - name: Ubuntu
