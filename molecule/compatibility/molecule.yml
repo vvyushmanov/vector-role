@@ -1,0 +1,29 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: podman
+# lint: |
+#   # yamllint .
+#   ansible-lint .
+platforms:
+- name: centos_7
+  image: vyushmanov/centos:7
+  pre_build_image: true
+# - name: ubuntu
+#   image: vyushmanov/ubuntu:latest
+# - name: centos_8
+#   image: vyushmanov/centos:8
+provisioner:
+  name: ansible
+  options:
+    vv: true
+    D: true
+verifier:
+  name: ansible
+scenario:
+  test_sequence:
+    - destroy
+    - create
+    - converge
+    - destroy

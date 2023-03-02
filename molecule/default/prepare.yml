@@ -1,0 +1,7 @@
+---
+- name: Prepare
+  hosts: all
+  tasks:
+    - name: Install psutil
+      ansible.builtin.pip:
+        name: psutil
