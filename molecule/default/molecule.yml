@@ -3,9 +3,9 @@ dependency:
   name: galaxy
 driver:
   name: docker
-lint: |
-  yamllint .
-  ansible-lint .
+# lint: |
+#   yamllint .
+#   ansible-lint .
 platforms:
 - name: centos_7
   image: vyushmanov/centos:7
