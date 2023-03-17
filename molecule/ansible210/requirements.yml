@@ -2,3 +2,4 @@
 collections:
   - name: community.docker
     version: 2.7.5
+    type: galaxy

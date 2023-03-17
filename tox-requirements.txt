@@ -4,5 +4,7 @@ yamllint==1.26.3
 lxml
 molecule==3.4.0
 molecule_podman
+molecule_docker
 jmespath
 ansible-compat
+ansible

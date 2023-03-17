@@ -1,0 +1,9 @@
+selinux
+ansible-lint
+yamllint
+lxml
+molecule==3.5.2
+molecule_docker
+jmespath
+ansible-compat
+ansible
