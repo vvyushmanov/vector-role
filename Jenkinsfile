@@ -10,7 +10,7 @@ pipeline {
         }
         stage('Run tests') {
             steps{
-                withPythonEnv('/usr/local/bin/python3.9') {
+                withPythonEnv('/usr/bin/python3.9') {
                     sh 'python3 --version'
                     sh 'pip install -r molecule/venv/requirements.txt'
                     sh 'molecule test'
